@@ -367,7 +367,13 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         // 1. Prevent the form from refreshing the page
         event.preventDefault();
         
-        // 2. Capture and format the user data
+        // 2. Change button text to show it's loading
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting...';
+        submitBtn.disabled = true;
+        
+        // 3. Capture and format the user data
         const name = document.getElementById('waName').value;
         const email = document.getElementById('waEmail').value.toLowerCase().trim();
         const phone = document.getElementById('waPhone').value.trim();
@@ -375,7 +381,7 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         // Extract first name for better matching
         const firstName = name.split(' ')[0];
 
-        // 3. Send the Lead event to Meta Pixel (Keep this for redundancy/deduplication)
+        // 4. Send the Lead event to Meta Pixel (Keep this for redundancy/deduplication)
         if (typeof fbq !== 'undefined') {
             fbq('track', 'Lead', {
                 content_name: 'WhatsApp Inquiry'
@@ -386,8 +392,7 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
             });
         }
 
-        // 4. FIRE DATA TO YOUR WEBHOOK (For Meta Conversions API)
-        // Replace this URL with your actual webhook from Zapier, Make.com, or your custom backend
+        // 5. FIRE DATA TO YOUR WEBHOOK (For Meta Conversions API)
         const webhookUrl = "https://hook.eu1.make.com/g9n53yemln9mscgkf4eqivwgyp61lkqk"; 
         
         const webhookPayload = {
@@ -402,23 +407,36 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
             }
         };
 
-        // We use fetch without 'await' so it fires in the background 
-        // without delaying the user from getting to WhatsApp.
+        // Fire webhook AND WAIT for it to finish before redirecting
         fetch(webhookUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(webhookPayload)
-        }).catch(error => console.error("Webhook failed:", error));
+        })
+        .then(response => {
+            console.log("Webhook fired successfully");
+            redirectToWhatsApp();
+        })
+        .catch(error => {
+            console.error("Webhook failed:", error);
+            // Even if it fails (e.g. adblocker blocks it), still send them to WhatsApp
+            redirectToWhatsApp(); 
+        })
+        .finally(() => {
+            // Reset the form and button
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+            closeWhatsAppModal();
+            event.target.reset();
+        });
 
-        // 5. Redirect the user to WhatsApp
-        const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
-        window.open(waUrl, '_blank');
-        
-        // 6. Close the modal and clear the form for the next time
-        closeWhatsAppModal();
-        event.target.reset();
+        // Helper function to handle the redirect
+        function redirectToWhatsApp() {
+            const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
+            window.open(waUrl, '_blank');
+        }
     }
 </script>
 
