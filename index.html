@@ -421,11 +421,11 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         })
         .catch(error => {
             console.error("Webhook failed:", error);
-            // Even if it fails (e.g. adblocker blocks it), still send them to WhatsApp
+            // Even if it fails, still send them to WhatsApp
             redirectToWhatsApp(); 
         })
         .finally(() => {
-            // Reset the form and button
+            // Reset the form and button (useful if the user presses 'back')
             submitBtn.innerHTML = originalBtnText;
             submitBtn.disabled = false;
             closeWhatsAppModal();
@@ -435,7 +435,8 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         // Helper function to handle the redirect
         function redirectToWhatsApp() {
             const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
-            window.open(waUrl, '_blank');
+            // FIXED: Use location.href to bypass browser popup blockers
+            window.location.href = waUrl;
         }
     }
 </script>
