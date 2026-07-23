@@ -353,7 +353,7 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
     </div>
 </footer>
 
-<!-- NEW: JavaScript to handle the Modal and Meta Pixel Data -->
+<!-- NEW: JavaScript to handle the Modal, Meta Pixel, and Webhook Data -->
 <script>
     function openWhatsAppModal() {
         document.getElementById('whatsappModal').classList.remove('hidden');
@@ -372,22 +372,51 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         const email = document.getElementById('waEmail').value.toLowerCase().trim();
         const phone = document.getElementById('waPhone').value.trim();
 
-        // 3. Send the Lead event to Meta with Advanced Matching Data
+        // Extract first name for better matching
+        const firstName = name.split(' ')[0];
+
+        // 3. Send the Lead event to Meta Pixel (Keep this for redundancy/deduplication)
         if (typeof fbq !== 'undefined') {
             fbq('track', 'Lead', {
                 content_name: 'WhatsApp Inquiry'
             }, {
                 em: email,
                 ph: phone,
-                fn: name.split(' ')[0] // Sends just the first name
+                fn: firstName 
             });
         }
 
-        // 4. Redirect the user to WhatsApp
+        // 4. FIRE DATA TO YOUR WEBHOOK (For Meta Conversions API)
+        // Replace this URL with your actual webhook from Zapier, Make.com, or your custom backend
+        const webhookUrl = "https://hook.eu1.make.com/hiyiax5py9qflvy9x4lwvq56xyk1n0gs"; 
+        
+        const webhookPayload = {
+            event_name: "Lead",
+            event_time: Math.floor(Date.now() / 1000), // Unix timestamp in seconds
+            source_url: window.location.href,
+            user_data: {
+                first_name: firstName,
+                full_name: name,
+                email: email,
+                phone: phone
+            }
+        };
+
+        // We use fetch without 'await' so it fires in the background 
+        // without delaying the user from getting to WhatsApp.
+        fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(webhookPayload)
+        }).catch(error => console.error("Webhook failed:", error));
+
+        // 5. Redirect the user to WhatsApp
         const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
         window.open(waUrl, '_blank');
         
-        // 5. Close the modal and clear the form for the next time
+        // 6. Close the modal and clear the form for the next time
         closeWhatsAppModal();
         event.target.reset();
     }
