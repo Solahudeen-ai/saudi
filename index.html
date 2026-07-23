@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,41 +13,35 @@
     
     <style>
         * { margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; }
-        .geometric-pattern {
-            background: 
-                linear-gradient(45deg, transparent 48%, #1e3a8a 49%, #1e3a8a 51%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, #1e3a8a 49%, #1e3a8a 51%, transparent 52%);
-            background-size: 60px 60px;
-            background-position: 0 0;
-            opacity: 0.03;
-        }
-        .border-arab {
-            border-left: 4px solid #facc15;
-            border-bottom: 4px solid #facc15;
-        }
-        .divider-arab {
-            width: 2px;
-            height: 60px;
-            background: linear-gradient(180deg, transparent, #facc15, transparent);
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
+        
         .text-amiri {
             font-family: 'Amiri', serif;
-            font-weight: 700;
         }
-        .hero-overlay {
-            position: relative;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        
+        /* Richer Gradient Backgrounds */
+        .hero-bg {
+            background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
         }
-        .pattern-circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid #facc15;
-            opacity: 0.1;
+        .cert-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
         }
+
+        /* Subtle Islamic/Geometric Pattern Overlay */
+        .pattern-overlay {
+            background-image: radial-gradient(#f59e0b 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.05;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-slate-50 relative">
+<body class="text-slate-800 antialiased relative">
     
 <!-- Meta Pixel Code -->
 <script>
@@ -71,12 +65,17 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
 <amp-analytics config="https://www.googletagmanager.com/amp.json?id=GTM-TLRTWCXG&gtm.url=SOURCE_URL" data-credentials="include"></amp-analytics>
 
 <!-- Navigation -->
-<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+<header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="text-3xl font-bold text-blue-900 text-amiri">SAUDI</div>
-        <div class="flex gap-4">
-            <a href="#cert" class="text-blue-900 font-semibold hover:text-yellow-500 transition">Certification</a>
-            <a href="#buy" class="bg-yellow-400 text-blue-900 font-bold px-8 py-2 rounded-none hover:bg-yellow-500 transition">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center shadow-lg">
+                <span class="text-2xl font-bold text-slate-900 text-amiri">S</span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 text-amiri tracking-wide">SAUDI</div>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="#cert" class="hidden md:block text-slate-600 font-semibold hover:text-amber-500 transition">Certification</a>
+            <a href="#buy" class="bg-slate-900 text-white font-bold px-6 py-2.5 rounded-full hover:bg-amber-500 hover:text-slate-900 transition-all shadow-lg hover:shadow-amber-500/30">
                 Order Now
             </a>
         </div>
@@ -84,164 +83,188 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
 </header>
 
 <!-- Hero Section -->
-<section class="hero-overlay min-h-screen flex items-center justify-center relative overflow-hidden py-20">
-    <div class="pattern-circle w-96 h-96 top-10 right-20"></div>
-    <div class="pattern-circle w-64 h-64 bottom-32 left-10"></div>
+<section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+    <div class="absolute inset-0 pattern-overlay"></div>
     
-    <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Decorative Glowing Orbs -->
+    <div class="absolute top-20 right-20 w-72 h-72 bg-amber-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+    <div class="absolute bottom-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center py-20">
         
-        <!-- Left: Minimal Copy -->
-        <div class="text-white space-y-8">
-            <div>
-                <h1 class="text-7xl font-bold text-amiri mb-4">SAUDI</h1>
-                <div class="w-20 h-1 bg-yellow-400"></div>
-            </div>
-            
+        <!-- Left: Copy -->
+        <div class="text-white space-y-10">
             <div class="space-y-4">
-                <p class="text-2xl font-light">Learn Arabic the way it's spoken</p>
-                <p class="text-lg text-gray-300 max-w-md">
-                    Ahmed vs Khalid. Decomposition. Real conversation.
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span class="text-sm font-semibold text-slate-300">Intermediate Level Available Now</span>
+                </div>
+                <h1 class="text-6xl md:text-7xl font-bold text-amiri leading-tight">
+                    Master Arabic <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">The Natural Way</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-md leading-relaxed">
+                    Ahmed vs Khalid. Deep decomposition. Real conversations. Stop memorizing lists and start speaking with confidence.
                 </p>
             </div>
 
-            <div class="space-y-3 pt-6 border-arab p-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-yellow-400 flex items-center justify-center text-blue-900 font-bold">1</div>
-                    <span>Intermediate Book 2</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-slate-800">
+                <div class="space-y-2">
+                    <div class="text-amber-500 text-2xl"><i class="fa-solid fa-book-journal-whills"></i></div>
+                    <h4 class="font-bold text-slate-200">Book 2</h4>
+                    <p class="text-xs text-slate-400">Parts 1 & 2 Included</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-yellow-400 flex items-center justify-center text-blue-900 font-bold">2</div>
-                    <span>Part 1 & Part 2</span>
+                <div class="space-y-2">
+                    <div class="text-amber-500 text-2xl"><i class="fa-solid fa-headphones"></i></div>
+                    <h4 class="font-bold text-slate-200">Audio Drills</h4>
+                    <p class="text-xs text-slate-400">Perfect your accent</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-yellow-400 flex items-center justify-center text-blue-900 font-bold">3</div>
-                    <span>Earn Certificate</span>
+                <div class="space-y-2">
+                    <div class="text-amber-500 text-2xl"><i class="fa-solid fa-certificate"></i></div>
+                    <h4 class="font-bold text-slate-200">Certified</h4>
+                    <p class="text-xs text-slate-400">Earn your credential</p>
                 </div>
             </div>
         </div>
 
         <!-- Right: Book Visual -->
-        <div class="flex justify-center items-center">
-            <div class="relative w-full max-w-sm">
-                <!-- Decorative corner -->
-                <div class="absolute -top-4 -right-4 w-16 h-16 border-2 border-yellow-400"></div>
-                <div class="absolute -bottom-4 -left-4 w-16 h-16 border-2 border-yellow-400"></div>
+        <div class="flex justify-center items-center relative">
+            <!-- Styling the Book Container to look good even without the image -->
+            <div class="relative w-full max-w-sm aspect-[3/4] bg-gradient-to-br from-slate-800 to-slate-900 rounded-r-2xl rounded-l-md shadow-2xl border-l-[12px] border-amber-600 flex items-center justify-center overflow-hidden group transform rotate-2 hover:rotate-0 transition duration-500">
                 
+                <!-- Fallback text inside the book just in case the image fails -->
+                <div class="absolute text-center px-6 z-0">
+                    <h2 class="text-5xl font-bold text-white text-amiri mb-4">SAUDI</h2>
+                    <div class="w-16 h-1 bg-amber-500 mx-auto mb-4"></div>
+                    <p class="text-amber-400 text-xl font-semibold">Book 2</p>
+                </div>
+
+                <!-- Actual Image (Will cover the fallback if it loads) -->
                 <img src="image.png" 
                      alt="SAUDI Book 2" 
-                     class="w-full rounded-sm shadow-2xl border-l-4 border-b-4 border-yellow-400 hover:shadow-3xl transition duration-500">
+                     class="absolute inset-0 w-full h-full object-cover z-10 opacity-0 transition-opacity duration-300"
+                     onload="this.classList.remove('opacity-0')">
+                     
+                <!-- Book Gloss Highlight -->
+                <div class="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-black/40 z-20 pointer-events-none"></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Visual Divider -->
-<div class="bg-white py-6">
-    <div class="max-w-7xl mx-auto px-6 flex justify-center">
-        <div class="divider-arab"></div>
-    </div>
-</div>
-
-<!-- What's Inside - Visual Only -->
-<section class="bg-white py-20">
+<!-- What's Inside -->
+<section class="py-24 bg-slate-50 relative">
     <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-3 gap-12">
-            
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-4xl font-bold text-slate-900 text-amiri mb-4">The Learning Methodology</h2>
+            <div class="w-24 h-1 bg-amber-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
             <!-- Card 1 -->
-            <div class="relative group">
-                <div class="absolute -top-2 -left-2 w-20 h-20 bg-yellow-400 opacity-10 rounded-full group-hover:opacity-20 transition"></div>
-                <div class="relative bg-slate-50 p-8 border-l-4 border-yellow-400">
-                    <div class="text-6xl mb-6">📖</div>
-                    <h3 class="text-2xl font-bold text-blue-900 mb-2">Real Dialogues</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Ahmed vs Khalid. See how native speakers structure their thoughts.
-                    </p>
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition duration-300 border border-slate-100 group">
+                <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition duration-300 shadow-sm">
+                    <i class="fa-solid fa-comments"></i>
                 </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-3 text-amiri">Real Dialogues</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Follow Ahmed and Khalid. See exactly how native speakers structure their thoughts in everyday, authentic conversations.
+                </p>
             </div>
 
             <!-- Card 2 -->
-            <div class="relative group">
-                <div class="absolute -top-2 -left-2 w-20 h-20 bg-yellow-400 opacity-10 rounded-full group-hover:opacity-20 transition"></div>
-                <div class="relative bg-slate-50 p-8 border-l-4 border-yellow-400">
-                    <div class="text-6xl mb-6">🎯</div>
-                    <h3 class="text-2xl font-bold text-blue-900 mb-2">Decomposition</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Break phrases into components. Build fluency piece by piece.
-                    </p>
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition duration-300 border border-slate-100 group">
+                <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition duration-300 shadow-sm">
+                    <i class="fa-solid fa-layer-group"></i>
                 </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-3 text-amiri">Decomposition</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    We break complex phrases into digestible components. Build your fluency piece by piece without feeling overwhelmed.
+                </p>
             </div>
 
             <!-- Card 3 -->
-            <div class="relative group">
-                <div class="absolute -top-2 -left-2 w-20 h-20 bg-yellow-400 opacity-10 rounded-full group-hover:opacity-20 transition"></div>
-                <div class="relative bg-slate-50 p-8 border-l-4 border-yellow-400">
-                    <div class="text-6xl mb-6">💬</div>
-                    <h3 class="text-2xl font-bold text-blue-900 mb-2">Articulation</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Drills designed for speech flow, not memorization.
-                    </p>
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition duration-300 border border-slate-100 group">
+                <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition duration-300 shadow-sm">
+                    <i class="fa-solid fa-microphone-lines"></i>
                 </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-3 text-amiri">Articulation Drills</h3>
+                <p class="text-slate-600 leading-relaxed">
+                    Practice exercises designed specifically for speech flow. Train your tongue, not just your memory.
+                </p>
             </div>
-
         </div>
     </div>
 </section>
 
 <!-- Certification Section -->
-<section id="cert" class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-24">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+<section id="cert" class="cert-bg text-white py-24 relative">
+    <div class="absolute inset-0 pattern-overlay"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
             
             <div>
-                <h2 class="text-4xl font-bold text-amiri mb-6">Earn Your Certificate</h2>
-                <div class="w-20 h-1 bg-yellow-400 mb-8"></div>
+                <span class="text-amber-400 font-semibold tracking-wider uppercase text-sm mb-2 block">Official Credential</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-amiri mb-6">Earn Your Certificate <br>of Mastery</h2>
+                <p class="text-slate-300 text-lg mb-10 max-w-md">Validate your language skills. Complete the guided modules and pass the proficiency assessment to earn your recognized credential.</p>
                 
                 <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <div class="text-yellow-400 text-2xl flex-shrink-0">✓</div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-check text-sm"></i>
+                        </div>
                         <div>
-                            <h4 class="font-bold mb-1">Structured Learning Path</h4>
-                            <p class="text-blue-100 text-sm">Complete Book 2 modules with guided practice</p>
+                            <h4 class="font-bold text-lg mb-1">Structured Learning Path</h4>
+                            <p class="text-slate-400 text-sm">Complete Book 2 modules with guided, step-by-step practice.</p>
                         </div>
                     </div>
                     
-                    <div class="flex gap-4">
-                        <div class="text-yellow-400 text-2xl flex-shrink-0">✓</div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-check text-sm"></i>
+                        </div>
                         <div>
-                            <h4 class="font-bold mb-1">Proficiency Assessment</h4>
-                            <p class="text-blue-100 text-sm">Test your understanding with authentic dialogues</p>
+                            <h4 class="font-bold text-lg mb-1">Proficiency Assessment</h4>
+                            <p class="text-slate-400 text-sm">Test your deep understanding with authentic scenario dialogues.</p>
                         </div>
                     </div>
                     
-                    <div class="flex gap-4">
-                        <div class="text-yellow-400 text-2xl flex-shrink-0">✓</div>
-                        <div>
-                            <h4 class="font-bold mb-1">Recognized Credential</h4>
-                            <p class="text-blue-100 text-sm">Digital certificate upon completion</p>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-check text-sm"></i>
                         </div>
-                    </div>
-
-                    <div class="flex gap-4">
-                        <div class="text-yellow-400 text-2xl flex-shrink-0">✓</div>
                         <div>
-                            <h4 class="font-bold mb-1">Lifetime Access</h4>
-                            <p class="text-blue-100 text-sm">Keep your materials. Review anytime.</p>
+                            <h4 class="font-bold text-lg mb-1">Lifetime Access</h4>
+                            <p class="text-slate-400 text-sm">Keep all your digital materials and review them anytime, anywhere.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Certificate Visual -->
-            <div class="flex justify-center">
-                <div class="bg-white text-blue-900 p-12 shadow-2xl transform -rotate-3 hover:rotate-0 transition duration-300 max-w-sm">
-                    <div class="text-center space-y-4">
-                        <div class="text-4xl text-yellow-500">📜</div>
-                        <h3 class="text-2xl font-bold text-amiri">Certificate of Mastery</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            This certifies that [Muhammad] has completed the SAUDI Book 2 Intermediate Arabic Training Program
+            <div class="flex justify-center lg:justify-end">
+                <div class="bg-white text-slate-900 p-10 rounded-xl shadow-2xl transform -rotate-2 hover:rotate-0 transition duration-500 max-w-md w-full border-[12px] border-slate-50 relative">
+                    <!-- Ribbon -->
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center shadow-lg text-white text-2xl">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    
+                    <div class="text-center space-y-6 border-4 border-double border-slate-200 p-8">
+                        <h3 class="text-3xl font-bold text-amiri text-slate-800">Certificate of Mastery</h3>
+                        <div class="w-16 h-1 bg-amber-500 mx-auto"></div>
+                        <p class="text-sm text-slate-600 leading-relaxed italic">
+                            This certifies that <br>
+                            <span class="text-xl font-bold text-slate-900 not-italic block my-3 border-b border-slate-300 pb-2">[Student Name]</span>
+                            has successfully completed the SAUDI Book 2 Intermediate Arabic Training Program.
                         </p>
-                        <div class="pt-6 border-t-2 border-yellow-400">
-                            <p class="text-xs text-gray-500">Issued by Sultan Arabic Courses</p>
+                        <div class="pt-6 flex justify-between items-end">
+                            <div class="text-left">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Black_check.svg/1024px-Black_check.svg.png" class="h-8 mb-2 opacity-20" alt="Signature">
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Lead Instructor</p>
+                            </div>
+                            <div class="w-12 h-12 border-2 border-amber-500 rounded-full flex items-center justify-center opacity-80">
+                                <span class="text-amber-500 text-xs font-bold font-amiri">ختم</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -250,90 +273,86 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
     </div>
 </section>
 
-<!-- Visual Divider -->
-<div class="bg-white py-6">
-    <div class="max-w-7xl mx-auto px-6 flex justify-center">
-        <div class="divider-arab"></div>
-    </div>
-</div>
-
 <!-- CTA Section -->
-<section id="buy" class="bg-gradient-to-b from-white to-slate-50 py-24">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-        
-        <div class="space-y-12">
+<section id="buy" class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-slate-50 rounded-3xl p-8 md:p-14 shadow-xl border border-slate-200 text-center relative overflow-hidden">
+            <!-- Decorative shape -->
+            <div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-bl-full"></div>
             
-            <!-- Main CTA -->
-            <div class="bg-white rounded-sm p-12 shadow-lg border-t-4 border-yellow-400">
-                <h2 class="text-5xl font-bold text-blue-900 text-amiri mb-4">#7,500</h2>
-                <p class="text-gray-600 text-lg mb-8">Complete Book 2 (Part 1 & 2)</p>
+            <div class="relative z-10 space-y-8">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-slate-900 text-amiri mb-4">Start Learning Today</h2>
+                    <p class="text-slate-600 text-lg">Get complete access to Book 2 (Parts 1 & 2)</p>
+                </div>
+
+                <div class="text-6xl font-bold text-slate-900 text-amiri">
+                    ₦7,500
+                </div>
                 
-                <a href="https://paystack.shop/pay/saudi" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="inline-block w-full md:w-auto bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-lg px-16 py-5 transition transform hover:scale-105 shadow-lg cursor-pointer mb-6">
-                    <i class="fa-solid fa-shopping-bag mr-3"></i>GET YOUR COPY
-                </a>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                    <a href="https://paystack.shop/pay/saudi" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-lg px-10 py-4 rounded-xl transition-all shadow-lg hover:shadow-amber-500/40 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-cart-shopping"></i> GET YOUR COPY
+                    </a>
+                    <button onclick="alert('Certificate enrollment coming soon')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg px-10 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 border border-slate-700">
+                        <i class="fa-solid fa-graduation-cap"></i> ADD CERTIFICATION
+                    </button>
+                </div>
 
-                <p class="text-sm text-gray-500">
-                    <i class="fa-solid fa-lock text-yellow-500 mr-2"></i>Secure checkout · 30-day guarantee
-                </p>
-            </div>
-
-            <!-- Secondary CTA -->
-            <div class="space-y-4">
-                <button onclick="alert('Certificate enrollment coming soon')" class="w-full md:w-auto bg-blue-900 hover:bg-blue-800 text-white font-bold px-12 py-4 transition border-2 border-blue-900">
-                    + ENROLL IN CERTIFICATION
-                </button>
-                <p class="text-xs text-gray-500">
-                    Add structured learning & assessment (#10,000/month)
-                </p>
-            </div>
-
-            <!-- Bulk -->
-            <div class="text-center text-sm text-gray-600 pt-8 border-t border-gray-200">
-                <p>
-                    Institute or bulk orders? 
-                    <a href="mailto:contact@arablagos.com" class="text-yellow-500 hover:text-yellow-600 font-semibold">Contact us</a>
-                </p>
+                <div class="flex justify-center items-center gap-6 text-sm text-slate-500 font-medium pt-6">
+                    <span><i class="fa-solid fa-lock text-amber-500 mr-1"></i> Secure Checkout</span>
+                    <span><i class="fa-solid fa-shield-halved text-amber-500 mr-1"></i> 30-Day Guarantee</span>
+                </div>
             </div>
         </div>
 
+        <!-- Bulk -->
+        <div class="text-center mt-12 text-slate-600">
+            <p class="bg-slate-100 inline-block px-6 py-2 rounded-full text-sm font-medium">
+                Institutions or bulk orders? 
+                <a href="mailto:contact@arablagos.com" class="text-amber-600 hover:text-amber-700 font-bold ml-1">Contact us directly</a>
+            </p>
+        </div>
     </div>
 </section>
 
-<!-- MODIFIED: WhatsApp Floating Button triggers Modal instead of direct link -->
-<button onclick="openWhatsAppModal()" class="fixed bottom-8 right-8 z-40 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl transition transform hover:scale-110">
-    <i class="fa-brands fa-whatsapp text-3xl"></i>
+<!-- WhatsApp Floating Button -->
+<button onclick="openWhatsAppModal()" class="fixed bottom-8 right-8 z-40 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-2xl hover:shadow-emerald-500/40 transition-all transform hover:-translate-y-1 group">
+    <i class="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition-transform"></i>
+    <span class="absolute -top-10 right-0 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Chat with us!</span>
 </button>
 
-<!-- NEW: WhatsApp Lead Capture Modal -->
-<div id="whatsappModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-60 backdrop-blur-sm px-4">
-    <div class="bg-white rounded-sm shadow-2xl w-full max-w-md p-8 relative border-t-4 border-green-500">
+<!-- WhatsApp Lead Capture Modal -->
+<div id="whatsappModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm px-4 opacity-0 transition-opacity duration-300" style="transition: opacity 0.3s ease;">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative transform scale-95 transition-transform duration-300" id="whatsappModalInner">
         <!-- Close Button -->
-        <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition">
-            <i class="fa-solid fa-xmark text-2xl"></i>
+        <button onclick="closeWhatsAppModal()" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition">
+            <i class="fa-solid fa-xmark"></i>
         </button>
         
-        <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fa-brands fa-whatsapp text-3xl text-green-500"></i>
+        <div class="text-center mb-8 pt-2">
+            <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5 relative">
+                <i class="fa-brands fa-whatsapp text-4xl text-emerald-500"></i>
+                <div class="absolute bottom-0 right-0 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></div>
             </div>
-            <h3 class="text-2xl font-bold text-blue-900">Let's Chat on WhatsApp</h3>
-            <p class="text-gray-500 text-sm mt-2">Please enter your details below so we can assist you better.</p>
+            <h3 class="text-2xl font-bold text-slate-900">Have a question?</h3>
+            <p class="text-slate-500 text-sm mt-2">Enter your details below and we'll connect you with an instructor on WhatsApp.</p>
         </div>
 
-        <form id="waForm" onsubmit="handleWhatsAppSubmit(event)" class="space-y-4 text-left">
+        <form id="waForm" onsubmit="handleWhatsAppSubmit(event)" class="space-y-5 text-left">
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
-                <input type="text" id="waName" required class="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="e.g. Muhammad Ali">
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
+                <input type="text" id="waName" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" placeholder="e.g. Muhammad Ali">
             </div>
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
-                <input type="email" id="waEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="student@example.com">
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Email Address</label>
+                <input type="email" id="waEmail" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" placeholder="student@example.com">
             </div>
             <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">WhatsApp Number</label>
-                <input type="tel" id="waPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="+234 ...">
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">WhatsApp Number</label>
+                <input type="tel" id="waPhone" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all" placeholder="+234 ...">
             </div>
-            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-sm transition flex justify-center items-center gap-2 mt-2">
+            <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/30 flex justify-center items-center gap-2 mt-4">
                 <span>Continue to WhatsApp</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -342,52 +361,72 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
 </div>
 
 <!-- Footer -->
-<footer class="bg-blue-950 text-gray-400 py-12">
-    <div class="max-w-7xl mx-auto px-6 text-center text-sm space-y-4">
-        <p>&copy; 2024 Sultan Arabic Courses</p>
-        <div class="flex justify-center gap-6">
-            <a href="#" class="hover:text-white transition">Privacy</a>
-            <a href="#" class="hover:text-white transition">Terms</a>
-            <a href="#" class="hover:text-white transition">Contact</a>
+<footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-center md:text-left">
+            <p class="font-bold text-slate-300 text-amiri text-xl mb-1">Arab Community of Lagos</p>
+            <p class="text-sm">&copy; 2026 SAUDI Courses. All rights reserved.</p>
+        </div>
+        <div class="flex gap-8 text-sm font-medium">
+            <a href="#" class="hover:text-amber-500 transition">Privacy Policy</a>
+            <a href="#" class="hover:text-amber-500 transition">Terms of Service</a>
+            <a href="mailto:contact@arablagos.com" class="hover:text-amber-500 transition">Contact Support</a>
         </div>
     </div>
 </footer>
 
-<!-- NEW: JavaScript to handle the Modal and Meta Pixel Data -->
+<!-- JavaScript for Modal -->
 <script>
+    const modal = document.getElementById('whatsappModal');
+    const modalInner = document.getElementById('whatsappModalInner');
+
     function openWhatsAppModal() {
-        document.getElementById('whatsappModal').classList.remove('hidden');
+        modal.classList.remove('hidden');
+        // Small delay to allow display:block to apply before changing opacity for transition
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modalInner.classList.remove('scale-95');
+            modalInner.classList.add('scale-100');
+        }, 10);
     }
 
     function closeWhatsAppModal() {
-        document.getElementById('whatsappModal').classList.add('hidden');
+        modal.classList.add('opacity-0');
+        modalInner.classList.remove('scale-100');
+        modalInner.classList.add('scale-95');
+        // Wait for transition to finish before hiding
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
     }
 
+    // Close on outside click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeWhatsAppModal();
+        }
+    });
+
     function handleWhatsAppSubmit(event) {
-        // 1. Prevent the form from refreshing the page
         event.preventDefault();
         
-        // 2. Capture and format the user data
         const name = document.getElementById('waName').value;
         const email = document.getElementById('waEmail').value.toLowerCase().trim();
         const phone = document.getElementById('waPhone').value.trim();
 
-        // 3. Send the Lead event to Meta with Advanced Matching Data
         if (typeof fbq !== 'undefined') {
             fbq('track', 'Lead', {
                 content_name: 'WhatsApp Inquiry'
             }, {
                 em: email,
                 ph: phone,
-                fn: name.split(' ')[0] // Sends just the first name
+                fn: name.split(' ')[0] 
             });
         }
 
-        // 4. Redirect the user to WhatsApp
-        const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
+        const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20" + encodeURIComponent(name) + "%20and%20I%27m%20interested%20in%20SAUDI%20Book%202.";
         window.open(waUrl, '_blank');
         
-        // 5. Close the modal and clear the form for the next time
         closeWhatsAppModal();
         event.target.reset();
     }
