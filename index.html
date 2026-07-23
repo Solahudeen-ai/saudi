@@ -367,21 +367,18 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
         // 1. Prevent the form from refreshing the page
         event.preventDefault();
         
-        // 2. Change button text to show it's loading
+        // 2. Change button text to show it's loading (though it will be instant now)
         const submitBtn = event.target.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Opening WhatsApp...';
         submitBtn.disabled = true;
         
         // 3. Capture and format the user data
         const name = document.getElementById('waName').value;
         const email = document.getElementById('waEmail').value.toLowerCase().trim();
         const phone = document.getElementById('waPhone').value.trim();
-
-        // Extract first name for better matching
         const firstName = name.split(' ')[0];
 
-        // 4. Send the Lead event to Meta Pixel (Keep this for redundancy/deduplication)
+        // 4. Send the Lead event to Meta Pixel
         if (typeof fbq !== 'undefined') {
             fbq('track', 'Lead', {
                 content_name: 'WhatsApp Inquiry'
@@ -392,12 +389,11 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
             });
         }
 
-        // 5. FIRE DATA TO YOUR WEBHOOK (For Meta Conversions API)
+        // 5. FIRE DATA TO YOUR WEBHOOK
         const webhookUrl = "https://hook.eu1.make.com/g9n53yemln9mscgkf4eqivwgyp61lkqk"; 
-        
         const webhookPayload = {
             event_name: "Lead",
-            event_time: Math.floor(Date.now() / 1000), // Unix timestamp in seconds
+            event_time: Math.floor(Date.now() / 1000),
             source_url: window.location.href,
             user_data: {
                 first_name: firstName,
@@ -407,37 +403,29 @@ src="https://www.facebook.com/tr?id=1060637489965925&ev=PageView&noscript=1"
             }
         };
 
-        // Fire webhook AND WAIT for it to finish before redirecting
+        // Fire webhook in the background with "keepalive: true"
+        // This guarantees the browser finishes sending it even after we leave the page
         fetch(webhookUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(webhookPayload)
-        })
-        .then(response => {
-            console.log("Webhook fired successfully");
-            redirectToWhatsApp();
-        })
-        .catch(error => {
-            console.error("Webhook failed:", error);
-            // Even if it fails, still send them to WhatsApp
-            redirectToWhatsApp(); 
-        })
-        .finally(() => {
-            // Reset the form and button (useful if the user presses 'back')
-            submitBtn.innerHTML = originalBtnText;
+            body: JSON.stringify(webhookPayload),
+            keepalive: true 
+        }).catch(error => console.error("Webhook failed:", error));
+
+        // 6. INSTANTLY redirect to WhatsApp
+        // Because there is no delay, mobile browsers will allow this
+        const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
+        window.location.href = waUrl;
+        
+        // Clean up behind the scenes just in case they press the "Back" button later
+        setTimeout(() => {
+            submitBtn.innerHTML = '<span>Continue to WhatsApp</span><i class="fa-solid fa-arrow-right"></i>';
             submitBtn.disabled = false;
             closeWhatsAppModal();
             event.target.reset();
-        });
-
-        // Helper function to handle the redirect
-        function redirectToWhatsApp() {
-            const waUrl = "https://wa.me/2347060620964?text=Hi%2C%20I%27m%20interested%20in%20SAUDI%20Book%202";
-            // FIXED: Use location.href to bypass browser popup blockers
-            window.location.href = waUrl;
-        }
+        }, 1000);
     }
 </script>
 
