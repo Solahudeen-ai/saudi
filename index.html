@@ -51,7 +51,7 @@ fbq('track', 'PageView');
     </div>
 </header>
 
-<section class="hero-overlay min-h-screen flex items-center justify-center relative overflow-hidden py-16">
+<section id="buy" class="hero-overlay min-h-screen flex items-center justify-center relative overflow-hidden py-16">
     <div class="pattern-circle w-96 h-96 top-10 right-20"></div>
     <div class="pattern-circle w-64 h-64 bottom-32 left-10"></div>
 
@@ -91,20 +91,98 @@ fbq('track', 'PageView');
 
         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             
-           <div class="bg-slate-50 border border-gray-100 p-8 flex flex-col items-center text-center group hover:shadow-lg transition">
-                <i class="fa-solid fa-brain text-4xl text-blue-900 mb-4"></i>
-                <h3 class="text-xl font-bold text-blue-900 mb-2">Memory Training</h3>
-                <p class="text-gray-500 text-sm mb-6">Master techniques to retain vocabulary rapidly.</p>
-                <div class="w-full space-y-3 mt-auto">
-                    <a href="https://paystack.shop/pay/ebook9" target="_blank" class="block w-full bg-blue-900 text-white font-bold py-3 hover:bg-blue-800 transition">
-                        Buy E-Book (₦3,500)
+           <div class="bg-slate-50 border border-gray-200 p-8 flex flex-col items-center text-center group hover:shadow-xl transition duration-300 relative overflow-hidden">
+                <div class="absolute top-4 left-4 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 uppercase tracking-wide border border-red-200 shadow-sm">
+                    Hardcopy Unavailable
+                </div>
+                
+                <div class="w-48 h-64 bg-slate-200 mb-6 mt-4 shadow-md group-hover:-translate-y-2 transition duration-500 border border-gray-300 relative flex items-center justify-center overflow-hidden">
+                    <img src="memory-cover.png" alt="Memory Training Book Cover" class="w-full h-full object-cover">
+                    <i class="fa-solid fa-brain text-4xl text-gray-400 absolute -z-10"></i>
+                </div>
+
+                <h3 class="text-2xl font-bold text-blue-900 mb-2 text-amiri">Sharp Memory Techniques</h3>
+                <p class="text-gray-600 text-sm mb-6 flex-grow">Master the techniques to develop a razor-sharp memory and retain Arabic vocabulary rapidly.</p>
+                
+                <div class="w-full mt-auto space-y-3 pt-4 border-t border-gray-200">
+                    <p class="text-sm font-semibold text-blue-900 mb-2"><i class="fa-solid fa-bolt text-yellow-500 mr-1"></i> Available in Soft Copy Only</p>
+                    <a href="https://paystack.shop/pay/ebook9" target="_blank" class="block w-full bg-blue-900 text-white font-bold py-3 hover:bg-blue-800 transition shadow-md flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Download Soft Copy (₦3,500)
                     </a>
                 </div>
             </div>
 
-            <div class="bg-slate-50 border border-gray-100 p-8 flex flex-col items-center text-center group hover:shadow-lg transition relative">
-                <div class="absolute top-4 right-4 bg-yellow-400 text-blue-900 text-xs font-bold px-2 py-1 uppercase">Soon</div>
-                <i class="fa-solid fa-microphone-lines text-4xl text-gray-400 mb-4"></i>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Mechanics of Eloquence</h3>
-                <p class="text-gray-500 text-sm mb-6">Deep dive into impactful speech delivery.</p>
-                <button onclick="openWhatsAppModal()" class="w-full border-2 border-gray-300 text-gray-7
+            <div class="bg-slate-50 border border-gray-200 p-8 flex flex-col items-center text-center group hover:shadow-xl transition duration-300 relative">
+                <div class="absolute top-4 right-4 bg-yellow-400 text-blue-900 text-xs font-bold px-3 py-1 uppercase shadow-sm">Coming Soon</div>
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6 mt-4">
+                    <i class="fa-solid fa-microphone-lines text-4xl text-gray-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-amiri">Mechanics of Eloquence</h3>
+                <p class="text-gray-500 text-sm mb-6 flex-grow">Deep dive into impactful speech delivery, vocal mechanics, and structural composition.</p>
+                <div class="w-full mt-auto pt-4 border-t border-gray-200">
+                    <button onclick="openWhatsAppModal()" class="w-full border-2 border-gray-300 text-gray-700 font-bold py-3 hover:bg-gray-100 transition mt-auto flex justify-center items-center gap-2">
+                        <i class="fa-regular fa-bell"></i> Join Waitlist
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<button onclick="openWhatsAppModal()" class="fixed bottom-8 right-8 z-40 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-2xl transition transform hover:scale-110 flex items-center justify-center">
+    <i class="fa-brands fa-whatsapp text-3xl"></i>
+</button>
+
+<div id="whatsappModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-60 backdrop-blur-sm px-4">
+    <div class="bg-white rounded-sm shadow-2xl w-full max-w-md p-8 relative border-t-4 border-green-500">
+        <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <div class="text-center mb-6">
+            <i class="fa-brands fa-whatsapp text-5xl text-green-500 mb-4"></i>
+            <h3 class="text-2xl font-bold text-blue-900">Chat with Us</h3>
+            <p class="text-gray-500 text-sm mt-2">Enter your details to connect instantly.</p>
+        </div>
+
+        <form id="waForm" onsubmit="handleWhatsAppSubmit(event)" class="space-y-4">
+            <input type="text" id="waName" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Full Name">
+            <input type="email" id="waEmail" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Email Address">
+            <input type="tel" id="waPhone" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="WhatsApp Number">
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 transition flex justify-center items-center gap-2 mt-2 shadow-md">
+                <span>Open WhatsApp</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<footer class="bg-blue-950 text-gray-400 py-8">
+    <div class="max-w-7xl mx-auto px-6 text-center text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+        <p>&copy; 2024 Sultan Arabic Courses</p>
+        <div class="flex gap-6">
+            <a href="mailto:contact@arablagos.com" class="hover:text-white transition">Bulk Orders: contact@arablagos.com</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function openWhatsAppModal() { document.getElementById('whatsappModal').classList.remove('hidden'); }
+    function closeWhatsAppModal() { document.getElementById('whatsappModal').classList.add('hidden'); }
+
+    function handleWhatsAppSubmit(event) {
+        event.preventDefault();
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting...';
+        submitBtn.disabled = true;
+
+        const name = document.getElementById('waName').value;
+        const email = document.getElementById('waEmail').value.toLowerCase().trim();
+        const phone = document.getElementById('waPhone').value.trim();
+        const firstName = name.split(' ')[0];
+
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead', { content_name: 'WhatsApp Inquiry' }, { em: email, ph: phone, fn: firstName });
+        }
+
+        const webhookUrl = "https://hook.us2.make
