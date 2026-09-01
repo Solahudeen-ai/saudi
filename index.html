@@ -211,9 +211,9 @@ fbq('track', 'PageView');
         }
 
         // 3. Construct WhatsApp URL & Redirect
-        const myWhatsAppNumber = "2347060620964"; // Replace with your number (e.g. 2348012345678)
+        const myWhatsAppNumber = "2347060620964"; 
         const message = encodeURIComponent(`Hello, my name is ${name}. I am reaching out from the website regarding the Arabic courses.`);
-        const waUrl = `https://wa.me/${2347060620964}?text=${message}`;
+        const waUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
 
         window.open(waUrl, '_blank');
 
