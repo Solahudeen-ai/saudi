@@ -66,12 +66,14 @@ fbq('track', 'PageView');
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                <a href="https://paystack.shop/pay/saudi" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-center px-8 py-4 transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-book"></i> Physical (₦7,500)
-                </a>
-                <a href="https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="border-2 border-white hover:bg-white hover:text-blue-900 text-white font-bold text-center px-8 py-4 transition flex items-center justify-center gap-3">
+                <!-- E-Book is now the primary button -->
+                <a href="https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-center px-8 py-4 transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
                     <i class="fa-solid fa-download"></i> E-Book (₦3,000)
                 </a>
+                <!-- Physical Book is rendered unclickable/unavailable -->
+                <div class="border-2 border-gray-600 bg-gray-800/40 text-gray-500 font-bold text-center px-8 py-4 flex items-center justify-center gap-3 cursor-not-allowed">
+                    <i class="fa-solid fa-book"></i> Physical (Unavailable)
+                </div>
             </div>
         </div>
 
