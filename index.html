@@ -134,6 +134,7 @@ fbq('track', 'PageView');
     <i class="fa-brands fa-whatsapp text-3xl"></i>
 </button>
 
+<!-- WHATSAPP GATEKEEPER MODAL -->
 <div id="whatsappModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900 bg-opacity-60 backdrop-blur-sm px-4">
     <div class="bg-white rounded-sm shadow-2xl w-full max-w-md p-8 relative border-t-4 border-green-500">
         <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition">
@@ -177,7 +178,7 @@ fbq('track', 'PageView');
     function openWhatsAppModal() { document.getElementById('whatsappModal').classList.remove('hidden'); }
     function closeWhatsAppModal() { document.getElementById('whatsappModal').classList.add('hidden'); }
 
-    async function handleWhatsAppSubmit(event) {
+    function handleWhatsAppSubmit(event) {
         event.preventDefault();
         
         const submitBtn = event.target.querySelector('button[type="submit"]');
@@ -196,29 +197,27 @@ fbq('track', 'PageView');
             fbq('track', 'Lead', { content_name: 'Modal Lead Capturing' }, { em: email, ph: phone, fn: firstName });
         }
 
-        // 2. Send data to Make.com Webhook 
+        // 2. Send data to Make.com Webhook (Fire and forget - NO AWAIT)
         // REMEMBER TO UPDATE THIS WITH YOUR ACTUAL MAKE.COM WEBHOOK URL
         const webhookUrl = "https://hook.us2.make.com/YOUR_MAKE_WEBHOOK_ID_HERE";
         
-        try {
-            await fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    purchased: purchased,
-                    source: "WhatsApp Gatekeeper Modal"
-                })
-            });
-        } catch (error) {
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                phone: phone,
+                purchased: purchased,
+                source: "WhatsApp Gatekeeper Modal"
+            })
+        }).catch(error => {
             console.error("Webhook failed to fire:", error);
-        }
+        });
 
-        // 3. Routing Logic based on answer
+        // 3. Routing Logic based on answer (Runs immediately to bypass popup blockers)
         if (purchased === 'no') {
             // Send non-buyers directly to Paystack to force the sale
             window.open('https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy', '_blank');
