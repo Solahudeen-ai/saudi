@@ -66,11 +66,9 @@ fbq('track', 'PageView');
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                <!-- E-Book is now the primary button -->
                 <a href="https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-center px-8 py-4 transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
                     <i class="fa-solid fa-download"></i> E-Book (₦3,000)
                 </a>
-                <!-- Physical Book is rendered unclickable/unavailable -->
                 <div class="border-2 border-gray-600 bg-gray-800/40 text-gray-500 font-bold text-center px-8 py-4 flex items-center justify-center gap-3 cursor-not-allowed">
                     <i class="fa-solid fa-book"></i> Physical (Unavailable)
                 </div>
@@ -144,16 +142,23 @@ fbq('track', 'PageView');
 
         <div class="text-center mb-6">
             <i class="fa-brands fa-whatsapp text-5xl text-green-500 mb-4"></i>
-            <h3 class="text-2xl font-bold text-blue-900">Chat with Us</h3>
-            <p class="text-gray-500 text-sm mt-2">Enter your details to connect instantly.</p>
+            <h3 class="text-2xl font-bold text-blue-900">Connect With Us</h3>
+            <p class="text-gray-500 text-sm mt-2">Enter your details to proceed.</p>
         </div>
 
         <form id="waForm" onsubmit="handleWhatsAppSubmit(event)" class="space-y-4">
             <input type="text" id="waName" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Full Name">
             <input type="email" id="waEmail" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="Email Address">
             <input type="tel" id="waPhone" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500" placeholder="WhatsApp Number">
+            
+            <select id="waPurchased" required class="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 bg-white">
+                <option value="" disabled selected>Have you purchased the SAUDI Book?</option>
+                <option value="yes">Yes, I have purchased it</option>
+                <option value="no">No, I want to buy it</option>
+            </select>
+
             <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 transition flex justify-center items-center gap-2 mt-2 shadow-md">
-                <span>Open WhatsApp</span> <i class="fa-solid fa-arrow-right"></i>
+                <span>Continue</span> <i class="fa-solid fa-arrow-right"></i>
             </button>
         </form>
     </div>
@@ -177,21 +182,22 @@ fbq('track', 'PageView');
         
         const submitBtn = event.target.querySelector('button[type="submit"]');
         const originalBtnHTML = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Processing...';
         submitBtn.disabled = true;
 
         const name = document.getElementById('waName').value;
         const email = document.getElementById('waEmail').value.toLowerCase().trim();
         const phone = document.getElementById('waPhone').value.trim();
+        const purchased = document.getElementById('waPurchased').value; 
         const firstName = name.split(' ')[0];
 
         // 1. Send data to Facebook Pixel
         if (typeof fbq !== 'undefined') {
-            fbq('track', 'Lead', { content_name: 'WhatsApp Inquiry' }, { em: email, ph: phone, fn: firstName });
+            fbq('track', 'Lead', { content_name: 'Modal Lead Capturing' }, { em: email, ph: phone, fn: firstName });
         }
 
         // 2. Send data to Make.com Webhook 
-        // Replace YOUR_MAKE_WEBHOOK_ID_HERE with your actual webhook ID from Make.com
+        // REMEMBER TO UPDATE THIS WITH YOUR ACTUAL MAKE.COM WEBHOOK URL
         const webhookUrl = "https://hook.us2.make.com/YOUR_MAKE_WEBHOOK_ID_HERE";
         
         try {
@@ -204,20 +210,25 @@ fbq('track', 'PageView');
                     name: name,
                     email: email,
                     phone: phone,
-                    source: "WhatsApp Modal"
+                    purchased: purchased,
+                    source: "WhatsApp Gatekeeper Modal"
                 })
             });
         } catch (error) {
             console.error("Webhook failed to fire:", error);
-            // It will still proceed to WhatsApp even if the webhook fails
         }
 
-        // 3. Construct WhatsApp URL & Redirect
-        const myWhatsAppNumber = "2347060620964"; 
-        const message = encodeURIComponent(`Hello, my name is ${name}. I am reaching out from the website regarding the Arabic courses.`);
-        const waUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
-
-        window.open(waUrl, '_blank');
+        // 3. Routing Logic based on answer
+        if (purchased === 'no') {
+            // Send non-buyers directly to Paystack to force the sale
+            window.open('https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy', '_blank');
+        } else {
+            // Send verified buyers to WhatsApp
+            const myWhatsAppNumber = "2347060620964"; 
+            const message = encodeURIComponent(`Hello, my name is ${name}. I have purchased the SAUDI book and I am reaching out for access/support.`);
+            const waUrl = `https://wa.me/${myWhatsAppNumber}?text=${message}`;
+            window.open(waUrl, '_blank');
+        }
 
         // 4. Clean up modal
         submitBtn.innerHTML = originalBtnHTML;
