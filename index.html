@@ -74,21 +74,24 @@ fbq('track', 'PageView');
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                <!-- E-Book Button -->
                 <a href="https://paystack.com/buy/saudi-ultimate-langugae-training-irihsy" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold text-center px-8 py-4 transition transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
                     <i class="fa-solid fa-download"></i> 
                     E-Book 
                     <span class="flex items-center gap-2 ml-1">
                         <span class="line-through text-yellow-700 text-sm font-normal">₦6,000</span> 
-                        <span>₦4,000</span>
+                        <span>₦3,000</span>
                     </span>
                 </a>
                 
-                <div class="border-2 border-gray-600 bg-gray-800/40 text-gray-400 font-bold text-center px-8 py-4 flex items-center justify-center gap-3 cursor-not-allowed relative overflow-hidden">
-                    <i class="fa-solid fa-book"></i> Physical Copy (₦15,000)
-                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center backdrop-blur-[1px]">
-                        <span class="bg-red-600 text-white text-xs px-2 py-1 uppercase tracking-wider shadow-lg transform -rotate-12">Sold Out</span>
+                <!-- Physical Copy Button -->
+                <a href="#" target="_blank" onclick="fbq('track', 'InitiateCheckout');" class="bg-blue-900 hover:bg-blue-800 text-white font-bold text-center px-8 py-3 transition transform hover:scale-105 shadow-lg flex flex-col items-center justify-center border-2 border-blue-800">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-book"></i> 
+                        <span>Physical Copy (₦8,500)</span>
                     </div>
-                </div>
+                    <span class="text-xs text-yellow-400 font-normal uppercase tracking-wider mt-1">+ Free Delivery to your address</span>
+                </a>
             </div>
         </div>
 
